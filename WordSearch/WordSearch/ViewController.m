@@ -19,6 +19,9 @@
 static NSString *kWSGridCellIdentifier = @"WSGridCellIdentifier";   // chars grid id
 static NSString *kWSWordCellIdentifier = @"WSWordCellIdentifier";   // word list id
 
+static UIEdgeInsets kWSGridSectionInsets = {0.0f, 0.0f, 0.0f, 0.0f};
+static UIEdgeInsets kWSWordListSectionInsets = {10.0f, 10.0f, 10.0f, 10.0f};
+
 @interface ViewController () <WSTouchesProtocol> {
     WSGameGenerator *_gameGenerator;
     WSWordList *_wordList;  // the list of the words to look for (an array of WSWord objects)
@@ -30,9 +33,9 @@ static NSString *kWSWordCellIdentifier = @"WSWordCellIdentifier";   // word list
 }
 
 @property (weak, nonatomic) IBOutlet UICollectionView *gridView;
+@property (weak, nonatomic) IBOutlet UICollectionView *wordListView;
 @property (weak, nonatomic) IBOutlet WSMarksOverlay *tempMarksOverlay;
 @property (weak, nonatomic) IBOutlet WSMarksOverlay *permanentMarksOverlay;
-@property (weak, nonatomic) IBOutlet UICollectionView *wordListView;
 
 @end
 
@@ -41,7 +44,6 @@ static NSString *kWSWordCellIdentifier = @"WSWordCellIdentifier";   // word list
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self generateTheGame];
-    [self setupMarkOverlays];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -72,10 +74,9 @@ static NSString *kWSWordCellIdentifier = @"WSWordCellIdentifier";   // word list
     // here the term 'dictionary' refers to the collection of words and not to the underlying data structure (which is an array)
     NSArray *fullDictionary = [NSArray arrayWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"fullDictionary" ofType:@"plist"]];
     
-    NSSet *wordsSubset = [NSSet setWithArray:fullDictionary];   // in a real world app it would be an actual subset
-    NSUInteger sideSize = 8;    // for demo purpose I assume that only square grids can be generated
+    NSSet *wordsSubset = [NSSet setWithArray:fullDictionary];   // in a real world app it would be an actual subset, e.g. thematic
     
-    _gameGenerator = [WSGameGenerator generatorWithWordsSet:wordsSubset andSideSize:sideSize];
+    _gameGenerator = [WSGameGenerator generatorWithWordsSet:wordsSubset andGameLevel:WSGameLevelHard];
     [_gameGenerator generate];
     
     _charsGrid = [_gameGenerator charsGrid];
@@ -125,13 +126,14 @@ static NSString *kWSWordCellIdentifier = @"WSWordCellIdentifier";   // word list
     return nil;
 }
 
-
 #pragma mark - UICollectionViewDelegateFlowLayout implementation
 
 - (UIEdgeInsets)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout insetForSectionAtIndex:(NSInteger)section
 {
-    if (collectionView == self.wordListView)
-        return UIEdgeInsetsMake(20.0f, 20.0f, 20.0f, 20.0f);
+    if (collectionView == self.gridView)
+        return kWSGridSectionInsets;
+    else if (collectionView == self.wordListView)
+        return kWSWordListSectionInsets;
     else
         return UIEdgeInsetsZero;
 }
@@ -142,11 +144,12 @@ static NSString *kWSWordCellIdentifier = @"WSWordCellIdentifier";   // word list
         return [self gridCellSize];
     }
     else if (collectionView == self.wordListView) {
-        return CGSizeMake(90.0f, 30.0f);
+        return [self wordCellSize];
     }
     return CGSizeZero;
 }
 
+/*
 - (CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout minimumLineSpacingForSectionAtIndex:(NSInteger)section
 {
     if (collectionView == self.wordListView)
@@ -154,15 +157,17 @@ static NSString *kWSWordCellIdentifier = @"WSWordCellIdentifier";   // word list
     else
         return 0.0f;
 }
+ */
 
+/*
 - (CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout minimumInteritemSpacingForSectionAtIndex:(NSInteger)section
 {
     if (collectionView == self.wordListView)
-        return 10.0f;
+        return 0.0f;
     else
         return 0.0f;
 }
-
+ */
 
 #pragma mark - touches
 
@@ -227,6 +232,39 @@ static NSString *kWSWordCellIdentifier = @"WSWordCellIdentifier";   // word list
     CGSize size;
     size.width = self.gridView.frame.size.width / _charsGrid.count;
     size.height = self.gridView.frame.size.height / _charsGrid.count;
+    return size;
+}
+
+- (CGSize)wordCellSize {
+
+//    NSLog(@"self.view.frame: %@", NSStringFromCGRect(self.view.frame));
+//    NSLog(@"self.wordListView.frame: %@", NSStringFromCGRect(self.wordListView.frame));
+    
+    CGRect drawableFrame = UIEdgeInsetsInsetRect(self.wordListView.frame, kWSWordListSectionInsets);
+
+    CGSize size;
+    
+    switch (_wordStrings.count) {
+        case 12: {
+            // e.g. iPhone portrait
+            if (self.wordListView.traitCollection.horizontalSizeClass == UIUserInterfaceSizeClassCompact) {
+                size.width = drawableFrame.size.width / 3;
+                size.height = drawableFrame.size.height / 4;
+            }
+            // e.g. iPad
+            else {
+                size.width = drawableFrame.size.width / 4;
+                size.height = drawableFrame.size.height / 3;
+            }
+            break;
+        }
+        default: {  // 9
+            size.width = drawableFrame.size.width / 3;
+            size.height = drawableFrame.size.height / 3;
+            break;
+        }
+    }
+    
     return size;
 }
 

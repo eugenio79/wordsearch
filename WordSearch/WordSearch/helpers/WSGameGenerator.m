@@ -9,8 +9,6 @@
 #import "WSGameGenerator.h"
 
 @interface WSGameGenerator() {
-    NSSet *_wordsSet;   // unused in this demo
-    NSUInteger _sideSize;   // unused in this demo
     NSArray *_generatedCharsGrid;
     WSWordList *_generatedWordList;
 }
@@ -19,20 +17,48 @@
 
 @implementation WSGameGenerator
 
-+ (instancetype)generatorWithWordsSet:(NSSet *)wordsSet andSideSize:(NSUInteger)sideSize {
-    return [[WSGameGenerator alloc] initWithWordsSet:wordsSet andSideSize:sideSize];
++ (instancetype)generatorWithWordsSet:(NSSet *)wordsSet andGameLevel:(WSGameLevel)gameLevel {
+    return [[WSGameGenerator alloc] initWithWordsSet:wordsSet andGameLevel:gameLevel];
 }
 
-- (instancetype)initWithWordsSet:(NSSet *)wordsSet andSideSize:(NSUInteger)sideSize {
+- (instancetype)initWithWordsSet:(NSSet *)wordsSet andGameLevel:(WSGameLevel)gameLevel {
     if (self = [super init]) {
-        _wordsSet = wordsSet;
-        _sideSize = sideSize;
+        self.wordsSet = wordsSet;
+        self.gameLevel = gameLevel;
     }
     return self;
 }
 
+- (NSArray *)charsGrid {
+    return _generatedCharsGrid;
+}
+
+- (WSWordList *)wordList {
+    return _generatedWordList;
+}
+
 // fake! demo purpose only
 - (void)generate {
+    
+    switch (self.gameLevel) {
+        case WSGameLevelEasy:
+            [self fakeGeneration_easy];
+            break;
+        case WSGameLevelHard:
+            [self fakeGeneration_hard];
+            break;
+        default:
+            [self fakeGeneration_medium];
+            break;
+    }
+}
+
+- (void)fakeGeneration_easy {
+    
+}
+
+- (void)fakeGeneration_medium {
+    
     NSArray *rows = @[@"K A E M O R A E",
                       @"O M I I Q H N U",
                       @"B I T N P E I T",
@@ -49,7 +75,6 @@
     }
     
     _generatedCharsGrid = [NSArray arrayWithArray:matrix];
-//    NSArray *wordTexts = [[_wordsSet allObjects] sortedArrayUsingSelector:@selector(localizedCaseInsensitiveCompare:)];
     
     _generatedWordList = [WSWordList list];
     
@@ -116,12 +141,91 @@
     [_generatedWordList addWord:word];
 }
 
-- (NSArray *)charsGrid {
-    return _generatedCharsGrid;
-}
-
-- (WSWordList *)wordList {
-    return _generatedWordList;
+- (void)fakeGeneration_hard {
+    
+    
+    NSArray *rows = @[@"A T I N G I D I E E",
+                      @"V M D E L L O S R R",
+                      @"A Q L Z R T I E E S",
+                      @"T T G L A M N N O I",
+                      @"N R T I Q E D G N C",
+                      @"E L G I T E G O K U",
+                      @"T A O N R E E R Y R",
+                      @"D I O G T A A U S E",
+                      @"K C L T A S R M R W",
+                      @"O I I G B O R E N W"];
+    
+    NSMutableArray *matrix = [[NSMutableArray alloc] initWithCapacity:rows.count];
+    for (NSString *rowStr in rows) {
+        NSArray *row = [rowStr componentsSeparatedByString:@" "];
+        [matrix addObject:row];
+    }
+    
+    _generatedCharsGrid = [NSArray arrayWithArray:matrix];
+    
+    _generatedWordList = [WSWordList list];
+    
+    WSWord *word;
+    
+    word = [WSWord wordWithText:@"AGIATO"
+              withStartPosition:WSMakeGridPosition(6, 1)
+                withEndPosition:WSMakeGridPosition(1, 6)];
+    [_generatedWordList addWord:word];
+    
+    word = [WSWord wordWithText:@"ATTIRARE"
+              withStartPosition:WSMakeGridPosition(2, 0)
+                withEndPosition:WSMakeGridPosition(9, 7)];
+    [_generatedWordList addWord:word];
+    
+    word = [WSWord wordWithText:@"CONTENERE"
+              withStartPosition:WSMakeGridPosition(8, 1)
+                withEndPosition:WSMakeGridPosition(0, 9)];
+    [_generatedWordList addWord:word];
+    
+    word = [WSWord wordWithText:@"DELLO"
+              withStartPosition:WSMakeGridPosition(1, 2)
+                withEndPosition:WSMakeGridPosition(1, 6)];
+    [_generatedWordList addWord:word];
+    
+    word = [WSWord wordWithText:@"DIGNITÀ"
+              withStartPosition:WSMakeGridPosition(0, 6)
+                withEndPosition:WSMakeGridPosition(0, 0)];
+    [_generatedWordList addWord:word];
+    
+    word = [WSWord wordWithText:@"MISE"
+              withStartPosition:WSMakeGridPosition(3, 5)
+                withEndPosition:WSMakeGridPosition(0, 8)];
+    [_generatedWordList addWord:word];
+    
+    word = [WSWord wordWithText:@"MURO"
+              withStartPosition:WSMakeGridPosition(8, 7)
+                withEndPosition:WSMakeGridPosition(5, 7)];
+    [_generatedWordList addWord:word];
+    
+    word = [WSWord wordWithText:@"NERO"
+              withStartPosition:WSMakeGridPosition(9, 8)
+                withEndPosition:WSMakeGridPosition(9, 5)];
+    [_generatedWordList addWord:word];
+    
+    word = [WSWord wordWithText:@"OGGETTI"
+              withStartPosition:WSMakeGridPosition(3, 8)
+                withEndPosition:WSMakeGridPosition(9, 1)];
+    [_generatedWordList addWord:word];
+    
+    word = [WSWord wordWithText:@"RENDERGLI"
+              withStartPosition:WSMakeGridPosition(1, 9)
+                withEndPosition:WSMakeGridPosition(9, 1)];
+    [_generatedWordList addWord:word];
+    
+    word = [WSWord wordWithText:@"SICURE"
+              withStartPosition:WSMakeGridPosition(2, 9)
+                withEndPosition:WSMakeGridPosition(7, 9)];
+    [_generatedWordList addWord:word];
+    
+    word = [WSWord wordWithText:@"TENTAVA"
+              withStartPosition:WSMakeGridPosition(6, 0)
+                withEndPosition:WSMakeGridPosition(0, 0)];
+    [_generatedWordList addWord:word];
 }
 
 @end
