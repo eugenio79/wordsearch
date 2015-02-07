@@ -15,6 +15,8 @@
 #import "WSMarksOverlay.h"
 #import "WSWordList.h"
 #import "WSWordCell.h"
+#import "WSCharsMatrix.h"
+#import "WSChar.h"
 
 static NSString *kWSGridCellIdentifier = @"WSGridCellIdentifier";   // chars grid id
 static NSString *kWSWordCellIdentifier = @"WSWordCellIdentifier";   // word list id
@@ -25,7 +27,7 @@ static UIEdgeInsets kWSWordListSectionInsets = {10.0f, 10.0f, 10.0f, 10.0f};
 @interface ViewController () <WSTouchesProtocol> {
     WSGameGenerator *_gameGenerator;
     WSWordList *_wordList;  // the list of the words to look for (an array of WSWord objects)
-    NSArray *_charsGrid;  // array of array of chars (each char is modeled as NSString)
+    WSCharsMatrix *_charsGrid;  // array of array of chars (each char is modeled as NSString)
     WSMarksFactory *_permanentMarksFactory; // creates the 'marks' above the grid
     WSMarksFactory *_tempMarksFactory;      // creates temporary marks
     WSMark *_currentMark;   // current temp mark
@@ -66,7 +68,7 @@ static UIEdgeInsets kWSWordListSectionInsets = {10.0f, 10.0f, 10.0f, 10.0f};
                                                 andColorsPalette:palette];
     
     _tempMarksFactory = [WSMarksFactory factoryWithCellSize:[self gridCellSize]
-                                           andColorsPalette:@[[UIColor blackColor]]];
+                                           andColorsPalette:@[[WSPalette gray]]];
 }
 
 - (void)generateTheGame
@@ -76,7 +78,7 @@ static UIEdgeInsets kWSWordListSectionInsets = {10.0f, 10.0f, 10.0f, 10.0f};
     
     NSSet *wordsSubset = [NSSet setWithArray:fullDictionary];   // in a real world app it would be an actual subset, e.g. thematic
     
-    _gameGenerator = [WSGameGenerator generatorWithWordsSet:wordsSubset andGameLevel:WSGameLevelHard];
+    _gameGenerator = [WSGameGenerator generatorWithWordsSet:wordsSubset andGameLevel:WSGameLevelMedium];
     [_gameGenerator generate];
     
     _charsGrid = [_gameGenerator charsGrid];
@@ -91,7 +93,7 @@ static UIEdgeInsets kWSWordListSectionInsets = {10.0f, 10.0f, 10.0f, 10.0f};
 {
     if (collectionView == self.gridView) {
         if (_charsGrid != nil)
-            return _charsGrid.count * _charsGrid.count;  // assuming, for demo purposes, that it's a square matrix
+            return [_charsGrid size];
     }
     else if (collectionView == self.wordListView) {
         if (_wordStrings != nil)
@@ -107,9 +109,9 @@ static UIEdgeInsets kWSWordListSectionInsets = {10.0f, 10.0f, 10.0f, 10.0f};
         
         if (cell != nil && _charsGrid != nil) {
             WSGridPosition position = [self gridPositionForIndexPath:indexPath];
-            NSArray *charsRow = [_charsGrid objectAtIndex:position.row];
-            NSString *charText = [charsRow objectAtIndex:position.column];
-            cell.charLabel.text = charText;
+            WSChar *wsChar = [_charsGrid charAtGridPosition:position];
+            cell.charLabel.text = [NSString stringWithFormat:@"%c", wsChar.character];
+            cell.charLabel.textColor = wsChar.marked ? [WSPalette white] : [WSPalette black];
         }
         
         return cell;
@@ -199,6 +201,7 @@ static UIEdgeInsets kWSWordListSectionInsets = {10.0f, 10.0f, 10.0f, 10.0f};
     // update views
     if (crossedOut_word != nil) {
         [self addPermanentMarkForWord:crossedOut_word];
+        [self markCharsForWord:crossedOut_word];
         [self crossOutString:crossedOut_word.text];
     }
     
@@ -223,15 +226,15 @@ static UIEdgeInsets kWSWordListSectionInsets = {10.0f, 10.0f, 10.0f, 10.0f};
 - (WSGridPosition)gridPositionForIndexPath:(NSIndexPath *)indexPath
 {
     WSGridPosition gridPosition;
-    gridPosition.row = (NSUInteger)(indexPath.row / _charsGrid.count);
-    gridPosition.column = (NSUInteger)(indexPath.row %  _charsGrid.count);
+    gridPosition.row = (NSUInteger)(indexPath.row / [_charsGrid rowsCount]);
+    gridPosition.column = (NSUInteger)(indexPath.row %  [_charsGrid columnsCount]);
     return gridPosition;
 }
 
 - (CGSize)gridCellSize {
     CGSize size;
-    size.width = self.gridView.frame.size.width / _charsGrid.count;
-    size.height = self.gridView.frame.size.height / _charsGrid.count;
+    size.width = self.gridView.frame.size.width / [_charsGrid columnsCount];
+    size.height = self.gridView.frame.size.height / [_charsGrid rowsCount];
     return size;
 }
 
@@ -274,6 +277,32 @@ static UIEdgeInsets kWSWordListSectionInsets = {10.0f, 10.0f, 10.0f, 10.0f};
     mark.startPosition = word.startPosition;
     mark.endPosition = word.endPosition;
     [_permanentMarksOverlay addMark:mark];
+}
+
+- (void)markCharsForWord:(WSWord *)word {
+    
+    NSMutableArray *indexPathsToReload = [NSMutableArray new];
+    
+    NSUInteger charIndex = 0;
+    while (charIndex < word.text.length) {
+        WSGridPosition currentPosition = [word gridPositionForCharAtIndex:charIndex];
+        WSChar *wsChar = [_charsGrid charAtGridPosition:currentPosition];
+        wsChar.marked = YES;
+        [indexPathsToReload addObject:[self indexPathForGridPosition:currentPosition]];
+        charIndex++;
+    }
+    
+    if (indexPathsToReload.count > 0)
+        [self.gridView reloadItemsAtIndexPaths:indexPathsToReload];
+}
+
+- (NSIndexPath *)indexPathForGridPosition:(WSGridPosition)gridPosition
+{
+    if (areEqualsPosition(gridPosition, WSGridPositionNotFound))
+        return nil;
+    
+    NSUInteger index = gridPosition.row * [_charsGrid rowsCount] + gridPosition.column;
+    return [NSIndexPath indexPathForItem:index inSection:0];
 }
 
 - (BOOL)crossOutString:(NSString *)string {

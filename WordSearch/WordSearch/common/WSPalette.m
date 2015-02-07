@@ -35,4 +35,16 @@
     return [UIColor colorWithHexString:@"#F09389"];
 }
 
++ (UIColor *)gray {
+    return [UIColor colorWithHexString:@"#ADADAD"];
+}
+
++ (UIColor *)white {
+    return [UIColor colorWithHexString:@"#FFFFFF"];
+}
+
++ (UIColor *)black {
+    return [UIColor colorWithHexString:@"#000000"];
+}
+
 @end

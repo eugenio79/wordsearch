@@ -9,7 +9,7 @@
 #import "WSGameGenerator.h"
 
 @interface WSGameGenerator() {
-    NSArray *_generatedCharsGrid;
+    WSCharsMatrix *_generatedCharsGrid;
     WSWordList *_generatedWordList;
 }
 
@@ -29,7 +29,7 @@
     return self;
 }
 
-- (NSArray *)charsGrid {
+- (WSCharsMatrix *)charsGrid {
     return _generatedCharsGrid;
 }
 
@@ -68,13 +68,7 @@
                       @"G G F O R T I M",
                       @"N A P I L E S E"];
     
-    NSMutableArray *matrix = [[NSMutableArray alloc] initWithCapacity:rows.count];
-    for (NSString *rowStr in rows) {
-        NSArray *row = [rowStr componentsSeparatedByString:@" "];
-        [matrix addObject:row];
-    }
-    
-    _generatedCharsGrid = [NSArray arrayWithArray:matrix];
+    _generatedCharsGrid = [WSCharsMatrix matrixWithArrayOfStrings:rows];
     
     _generatedWordList = [WSWordList list];
     
@@ -155,13 +149,7 @@
                       @"K C L T A S R M R W",
                       @"O I I G B O R E N W"];
     
-    NSMutableArray *matrix = [[NSMutableArray alloc] initWithCapacity:rows.count];
-    for (NSString *rowStr in rows) {
-        NSArray *row = [rowStr componentsSeparatedByString:@" "];
-        [matrix addObject:row];
-    }
-    
-    _generatedCharsGrid = [NSArray arrayWithArray:matrix];
+    _generatedCharsGrid = [WSCharsMatrix matrixWithArrayOfStrings:rows];
     
     _generatedWordList = [WSWordList list];
     
@@ -209,7 +197,7 @@
     
     word = [WSWord wordWithText:@"OGGETTI"
               withStartPosition:WSMakeGridPosition(3, 8)
-                withEndPosition:WSMakeGridPosition(9, 1)];
+                withEndPosition:WSMakeGridPosition(9, 2)];
     [_generatedWordList addWord:word];
     
     word = [WSWord wordWithText:@"RENDERGLI"

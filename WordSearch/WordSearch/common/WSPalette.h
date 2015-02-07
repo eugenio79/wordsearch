@@ -20,5 +20,8 @@
 + (UIColor *)yellow;
 + (UIColor *)blue;
 + (UIColor *)red;
++ (UIColor *)gray;
++ (UIColor *)white;
++ (UIColor *)black;
 
 @end

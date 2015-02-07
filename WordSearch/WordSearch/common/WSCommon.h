@@ -30,3 +30,5 @@ BOOL areEqualsPosition(WSGridPosition firstPosition, WSGridPosition secondPositi
 WSGridPosition WSMakeGridPosition(NSUInteger row, NSUInteger column);
 
 NSString *NSStringFromPosition(WSGridPosition position);
+
+#define WSGridPositionNotFound WSMakeGridPosition(NSUIntegerMax, NSUIntegerMax)

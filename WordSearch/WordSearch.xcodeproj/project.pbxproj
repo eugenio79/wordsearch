@@ -28,6 +28,8 @@
 		BA4D06B81A82B91F007D179C /* fullDictionary.plist in Resources */ = {isa = PBXBuildFile; fileRef = BA4D06B71A82B91F007D179C /* fullDictionary.plist */; };
 		BA6C4ED81A8626BB00D4A6E6 /* fullDictionary.plist in Resources */ = {isa = PBXBuildFile; fileRef = BA6C4ED71A8626BB00D4A6E6 /* fullDictionary.plist */; };
 		BAA0E5A01A8634690034C079 /* WSWordListView.m in Sources */ = {isa = PBXBuildFile; fileRef = BAA0E59F1A8634690034C079 /* WSWordListView.m */; };
+		BAA0E5A61A8697310034C079 /* WSChar.m in Sources */ = {isa = PBXBuildFile; fileRef = BAA0E5A51A8697310034C079 /* WSChar.m */; };
+		BAA0E5A91A8697B10034C079 /* WSCharsMatrix.m in Sources */ = {isa = PBXBuildFile; fileRef = BAA0E5A81A8697B10034C079 /* WSCharsMatrix.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -81,6 +83,10 @@
 		BA6C4ED71A8626BB00D4A6E6 /* fullDictionary.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = fullDictionary.plist; sourceTree = "<group>"; };
 		BAA0E59E1A8634690034C079 /* WSWordListView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WSWordListView.h; sourceTree = "<group>"; };
 		BAA0E59F1A8634690034C079 /* WSWordListView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WSWordListView.m; sourceTree = "<group>"; };
+		BAA0E5A41A8697310034C079 /* WSChar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WSChar.h; sourceTree = "<group>"; };
+		BAA0E5A51A8697310034C079 /* WSChar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WSChar.m; sourceTree = "<group>"; };
+		BAA0E5A71A8697B10034C079 /* WSCharsMatrix.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WSCharsMatrix.h; sourceTree = "<group>"; };
+		BAA0E5A81A8697B10034C079 /* WSCharsMatrix.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WSCharsMatrix.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -208,6 +214,10 @@
 				BA4D06991A82B903007D179C /* WSWord.m */,
 				BA4D069A1A82B903007D179C /* WSWordList.h */,
 				BA4D069B1A82B903007D179C /* WSWordList.m */,
+				BAA0E5A41A8697310034C079 /* WSChar.h */,
+				BAA0E5A51A8697310034C079 /* WSChar.m */,
+				BAA0E5A71A8697B10034C079 /* WSCharsMatrix.h */,
+				BAA0E5A81A8697B10034C079 /* WSCharsMatrix.m */,
 			);
 			path = models;
 			sourceTree = "<group>";
@@ -349,7 +359,9 @@
 				BA4D06B41A82B903007D179C /* WSWordCell.m in Sources */,
 				BA4D066B1A82A72D007D179C /* ViewController.m in Sources */,
 				BA4D06B31A82B903007D179C /* WSMarksOverlay.m in Sources */,
+				BAA0E5A61A8697310034C079 /* WSChar.m in Sources */,
 				BA4D06A91A82B903007D179C /* UIColor+WS.m in Sources */,
+				BAA0E5A91A8697B10034C079 /* WSCharsMatrix.m in Sources */,
 				BA4D06681A82A72D007D179C /* AppDelegate.m in Sources */,
 				BA4D06AB1A82B903007D179C /* WSPalette.m in Sources */,
 				BA4D06AF1A82B903007D179C /* WSWord.m in Sources */,

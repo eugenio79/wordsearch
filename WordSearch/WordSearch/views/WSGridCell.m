@@ -7,6 +7,7 @@
 //
 
 #import "WSGridCell.h"
+#import "WSPalette.h"
 
 @implementation WSGridCell
 

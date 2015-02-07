@@ -9,6 +9,7 @@
 #import <Foundation/Foundation.h>
 #import "WSCommon.h"
 #import "WSWordList.h"
+#import "WSCharsMatrix.h"
 
 typedef enum {
     WSGameLevelEasy,    // grid = 8x8, words = 9
@@ -36,7 +37,7 @@ typedef enum {
 
 - (void)generate;
 
-- (NSArray *)charsGrid;
+- (WSCharsMatrix *)charsGrid;
 - (WSWordList *)wordList;
 
 @end

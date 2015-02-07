@@ -16,8 +16,11 @@
              withEndPosition:(WSGridPosition)endPosition;
 
 @property (nonatomic, strong, readonly) NSString *text;
+
 @property (nonatomic, readonly) WSGridPosition startPosition;
 @property (nonatomic, readonly) WSGridPosition endPosition;
+
+- (WSGridPosition)gridPositionForCharAtIndex:(NSUInteger)charIndex;
 
 - (BOOL)isCrossedOut;
 

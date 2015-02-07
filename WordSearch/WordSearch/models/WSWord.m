@@ -39,6 +39,29 @@
     return self;
 }
 
+- (WSGridPosition)gridPositionForCharAtIndex:(NSUInteger)charIndex {
+    if (charIndex >= self.text.length)
+        return WSGridPositionNotFound;
+    
+    WSGridPosition position;
+    
+    if (self.startPosition.row < self.endPosition.row)
+        position.row = self.startPosition.row + charIndex;
+    else if (self.startPosition.row > self.endPosition.row)
+        position.row = self.startPosition.row - charIndex;
+    else
+        position.row = self.startPosition.row;
+    
+    if (self.startPosition.column < self.endPosition.column)
+        position.column = self.startPosition.column + charIndex;
+    else if (self.startPosition.column > self.endPosition.column)
+        position.column = self.startPosition.column - charIndex;
+    else
+        position.column = self.startPosition.column;
+    
+    return position;
+}
+
 - (BOOL)isCrossedOut {
     return _crossedOut;
 }
