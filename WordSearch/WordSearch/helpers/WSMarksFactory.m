@@ -13,40 +13,30 @@
 @interface WSMarksFactory() {
     WSBrush _brush;
     CGSize _cellSize;
-    NSArray *_colorsPalette;
-    NSUInteger _currentColorIndex;
 }
 
 @end
 
 @implementation WSMarksFactory
 
-+ (instancetype)factoryWithCellSize:(CGSize)cellSize andColorsPalette:(NSArray *)colorsPalette {
-    return [[WSMarksFactory alloc] initWithCellSize:cellSize andColorsPalette:colorsPalette];
++ (instancetype)factoryWithCellSize:(CGSize)cellSize {
+    return [[WSMarksFactory alloc] initWithCellSize:cellSize];
 }
 
-- (instancetype)initWithCellSize:(CGSize)cellSize andColorsPalette:(NSArray *)colorsPalette
+- (instancetype)initWithCellSize:(CGSize)cellSize
 {
     if (self = [super init]) {
-        _colorsPalette = colorsPalette;
-        _currentColorIndex = colorsPalette.count;
         _brush.opacity = 0.6f;
         _cellSize = cellSize;
-        _brush.size = cellSize.width - (cellSize.width / 10);   // I'm assuming that width == height
+        _brush.size = cellSize.width * 4 / 5;   // I'm assuming that width == height
     }
     return self;
 }
 
-- (WSMark *)createMark {
-    _brush.rgb = [self nextColor];
+- (WSMark *)createMarkWithColor:(UIColor *)color
+{
+    _brush.rgb = [color rgbColor];
     return [WSMark markWithBrush:_brush withCellSize:_cellSize];
-}
-
-- (rgbColor)nextColor {
-    _currentColorIndex++;
-    if (_currentColorIndex >= _colorsPalette.count)
-        _currentColorIndex = 0;
-    return [_colorsPalette[_currentColorIndex] rgbColor];
 }
 
 @end

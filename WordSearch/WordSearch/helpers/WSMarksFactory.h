@@ -11,12 +11,8 @@
 
 @interface WSMarksFactory : NSObject
 
-/**
- * @param colorsPalette A list of colors to use to draw the marks
- */
-+ (instancetype)factoryWithCellSize:(CGSize)cellSize
-                   andColorsPalette:(NSArray *)colorsPalette;
++ (instancetype)factoryWithCellSize:(CGSize)cellSize;
 
-- (WSMark *)createMark;
+- (WSMark *)createMarkWithColor:(UIColor *)color;
 
 @end

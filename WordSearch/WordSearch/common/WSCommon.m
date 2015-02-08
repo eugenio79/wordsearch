@@ -12,6 +12,10 @@ BOOL areEqualsPosition(WSGridPosition firstPosition, WSGridPosition secondPositi
     return (firstPosition.column == secondPosition.column) && (firstPosition.row == secondPosition.row);
 }
 
+BOOL areEqualsSizes(CGSize firstSize, CGSize secondSize) {
+    return (firstSize.height == secondSize.height) && (firstSize.width == secondSize.width);
+}
+
 WSGridPosition WSMakeGridPosition(NSUInteger row, NSUInteger column) {
     WSGridPosition position;
     position.row = row;

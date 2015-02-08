@@ -8,10 +8,6 @@
 
 #import "WSWordCell.h"
 
-@interface WSWordCell()
-@property (weak, nonatomic) IBOutlet UILabel *wordLabel;
-@end
-
 @implementation WSWordCell
 
 - (void)setWord:(WSWord *)word {

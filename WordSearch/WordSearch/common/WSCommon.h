@@ -26,6 +26,7 @@ typedef struct {
 } WSBrush;
 
 BOOL areEqualsPosition(WSGridPosition firstPosition, WSGridPosition secondPosition);
+BOOL areEqualsSizes(CGSize firstSize, CGSize secondSize);
 
 WSGridPosition WSMakeGridPosition(NSUInteger row, NSUInteger column);
 

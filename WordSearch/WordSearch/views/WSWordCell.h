@@ -12,5 +12,6 @@
 @interface WSWordCell : UICollectionViewCell
 
 @property (nonatomic, strong) WSWord *word;
+@property (weak, nonatomic) IBOutlet UILabel *wordLabel;
 
 @end

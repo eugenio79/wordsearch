@@ -12,27 +12,27 @@
 @implementation WSPalette
 
 + (UIColor *)violet {
-    return [UIColor colorWithHexString:@"#C39BD2"];
+    return [UIColor colorWithHexString:@"#a684b3"]; // #C39BD2
 }
 
 + (UIColor *)orange {
-    return [UIColor colorWithHexString:@"#EFB079"];
+    return [UIColor colorWithHexString:@"#cb9667"]; // #EFB079
 }
 
 + (UIColor *)green {
-    return [UIColor colorWithHexString:@"#75CB99"];
+    return [UIColor colorWithHexString:@"#63ad82"]; // #75CB99
 }
 
 + (UIColor *)yellow {
-    return [UIColor colorWithHexString:@"#F6DB6E"];
+    return [UIColor colorWithHexString:@"#d1ba5e"]; // #F6DB6E
 }
 
 + (UIColor *)blue {
-    return [UIColor colorWithHexString:@"#85C1E9"];
+    return [UIColor colorWithHexString:@"#71a4c6"]; // #85C1E9
 }
 
 + (UIColor *)red {
-    return [UIColor colorWithHexString:@"#F09389"];
+    return [UIColor colorWithHexString:@"#cc7d74"]; // #F09389
 }
 
 + (UIColor *)gray {

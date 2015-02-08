@@ -17,6 +17,7 @@
 #import "WSWordCell.h"
 #import "WSCharsMatrix.h"
 #import "WSChar.h"
+#import "UIColor+WS.h"
 
 static NSString *kWSGridCellIdentifier = @"WSGridCellIdentifier";   // chars grid id
 static NSString *kWSWordCellIdentifier = @"WSWordCellIdentifier";   // word list id
@@ -32,12 +33,19 @@ static UIEdgeInsets kWSWordListSectionInsets = {10.0f, 10.0f, 10.0f, 10.0f};
     WSMarksFactory *_tempMarksFactory;      // creates temporary marks
     WSMark *_currentMark;   // current temp mark
     NSArray *_wordStrings;  // the list of words to look for (an array of NSString, derived from _wordList)
+    NSArray *_colorsPalette;
+    NSUInteger _currentColorIndex;
+//    CGSize _currentGridCellSize;
+//    CGFloat _currentGridCellFontSize;
 }
 
 @property (weak, nonatomic) IBOutlet UICollectionView *gridView;
 @property (weak, nonatomic) IBOutlet UICollectionView *wordListView;
 @property (weak, nonatomic) IBOutlet WSMarksOverlay *tempMarksOverlay;
 @property (weak, nonatomic) IBOutlet WSMarksOverlay *permanentMarksOverlay;
+
+@property (nonatomic) CGSize gridCellSize;
+@property (nonatomic) CGFloat gridCellFontSize;
 
 @end
 
@@ -50,25 +58,34 @@ static UIEdgeInsets kWSWordListSectionInsets = {10.0f, 10.0f, 10.0f, 10.0f};
 
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
-    [self setupMarkOverlays];   // only now I can setup the overlays, because I need to know how big is a cell
+    [self setupUI];   // only now I can setup some UI settings, because I need to know how big is a cell
 }
 
-- (void)setupMarkOverlays
+- (CGFloat)gridCellFontSize
+{
+    NSString *charStr = @"A";   // random char
+    CGFloat fontSize = 17.0f;
+    NSDictionary *attributes = @{NSFontAttributeName: [UIFont fontWithName:@"TrebuchetMS" size:fontSize]};
+    CGSize size = [charStr sizeWithAttributes:attributes];
+    CGFloat pointsPerPixel = fontSize / size.height;
+    return self.gridCellSize.height * pointsPerPixel * 0.65;
+}
+
+- (void)setupUI
 {
     self.tempMarksOverlay.touchesDelegate = self;
     
-    NSArray *palette = @[[WSPalette violet],
-                         [WSPalette orange],
-                         [WSPalette green],
-                         [WSPalette yellow],
-                         [WSPalette blue],
-                         [WSPalette red]];
+    _colorsPalette = @[[WSPalette violet],
+                       [WSPalette orange],
+                       [WSPalette green],
+                       [WSPalette yellow],
+                       [WSPalette blue],
+                       [WSPalette red]];
     
-    _permanentMarksFactory = [WSMarksFactory factoryWithCellSize:[self gridCellSize]
-                                                andColorsPalette:palette];
+    _currentColorIndex = _colorsPalette.count;  // in this way I'll start with first color (@see nextColor method)
     
-    _tempMarksFactory = [WSMarksFactory factoryWithCellSize:[self gridCellSize]
-                                           andColorsPalette:@[[WSPalette gray]]];
+    _permanentMarksFactory = [WSMarksFactory factoryWithCellSize:self.gridCellSize];
+    _tempMarksFactory = [WSMarksFactory factoryWithCellSize:self.gridCellSize];
 }
 
 - (void)generateTheGame
@@ -78,7 +95,7 @@ static UIEdgeInsets kWSWordListSectionInsets = {10.0f, 10.0f, 10.0f, 10.0f};
     
     NSSet *wordsSubset = [NSSet setWithArray:fullDictionary];   // in a real world app it would be an actual subset, e.g. thematic
     
-    _gameGenerator = [WSGameGenerator generatorWithWordsSet:wordsSubset andGameLevel:WSGameLevelMedium];
+    _gameGenerator = [WSGameGenerator generatorWithWordsSet:wordsSubset andGameLevel:WSGameLevelHard];
     [_gameGenerator generate];
     
     _charsGrid = [_gameGenerator charsGrid];
@@ -112,6 +129,7 @@ static UIEdgeInsets kWSWordListSectionInsets = {10.0f, 10.0f, 10.0f, 10.0f};
             WSChar *wsChar = [_charsGrid charAtGridPosition:position];
             cell.charLabel.text = [NSString stringWithFormat:@"%c", wsChar.character];
             cell.charLabel.textColor = wsChar.marked ? [WSPalette white] : [WSPalette black];
+            cell.charLabel.font = [UIFont fontWithName:@"TrebuchetMS" size:self.gridCellFontSize];
         }
         
         return cell;
@@ -122,6 +140,7 @@ static UIEdgeInsets kWSWordListSectionInsets = {10.0f, 10.0f, 10.0f, 10.0f};
             NSString *text = _wordStrings[indexPath.row];
             WSWord *word = [_wordList wordWithText:text];
             cell.word = word;
+            cell.wordLabel.textColor = _colorsPalette[_currentColorIndex];
         }
         return cell;
     }
@@ -143,7 +162,7 @@ static UIEdgeInsets kWSWordListSectionInsets = {10.0f, 10.0f, 10.0f, 10.0f};
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath
 {
     if (collectionView == self.gridView) {
-        return [self gridCellSize];
+        return self.gridCellSize;
     }
     else if (collectionView == self.wordListView) {
         return [self wordCellSize];
@@ -177,7 +196,7 @@ static UIEdgeInsets kWSWordListSectionInsets = {10.0f, 10.0f, 10.0f, 10.0f};
     
     WSGridPosition gridPosition = [self gridPositionForItemAtPoint:point];
     
-    _currentMark = [_tempMarksFactory createMark];
+    _currentMark = [_tempMarksFactory createMarkWithColor:[WSPalette gray]];
     _currentMark.startPosition = gridPosition;
     _currentMark.endPosition = gridPosition;
     [_tempMarksOverlay addMark:_currentMark];
@@ -231,11 +250,13 @@ static UIEdgeInsets kWSWordListSectionInsets = {10.0f, 10.0f, 10.0f, 10.0f};
     return gridPosition;
 }
 
+// lazy-load
 - (CGSize)gridCellSize {
-    CGSize size;
-    size.width = self.gridView.frame.size.width / [_charsGrid columnsCount];
-    size.height = self.gridView.frame.size.height / [_charsGrid rowsCount];
-    return size;
+    if (areEqualsSizes(_gridCellSize, CGSizeZero)) {
+        _gridCellSize.width = self.gridView.frame.size.width / [_charsGrid columnsCount];
+        _gridCellSize.height = self.gridView.frame.size.height / [_charsGrid rowsCount];
+    }
+    return _gridCellSize;
 }
 
 - (CGSize)wordCellSize {
@@ -273,7 +294,7 @@ static UIEdgeInsets kWSWordListSectionInsets = {10.0f, 10.0f, 10.0f, 10.0f};
 
 - (void)addPermanentMarkForWord:(WSWord *)word {
     
-    WSMark *mark = [_permanentMarksFactory createMark];
+    WSMark *mark = [_permanentMarksFactory createMarkWithColor:[self nextColor]];
     mark.startPosition = word.startPosition;
     mark.endPosition = word.endPosition;
     [_permanentMarksOverlay addMark:mark];
@@ -318,6 +339,13 @@ static UIEdgeInsets kWSWordListSectionInsets = {10.0f, 10.0f, 10.0f, 10.0f};
     }
     
     return NO;
+}
+
+- (UIColor *)nextColor {
+    _currentColorIndex++;
+    if (_currentColorIndex >= _colorsPalette.count)
+        _currentColorIndex = 0;
+    return _colorsPalette[_currentColorIndex];
 }
 
 @end

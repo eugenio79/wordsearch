@@ -30,7 +30,7 @@
     CGContextSetLineCap(UIGraphicsGetCurrentContext(), kCGLineCapRound);
     CGContextSetLineWidth(UIGraphicsGetCurrentContext(), mark.brush.size );
     CGContextSetRGBStrokeColor(UIGraphicsGetCurrentContext(), mark.brush.rgb.red, mark.brush.rgb.green, mark.brush.rgb.blue, 1.0);
-    CGContextSetBlendMode(UIGraphicsGetCurrentContext(),kCGBlendModeOverlay);
+    CGContextSetBlendMode(UIGraphicsGetCurrentContext(),kCGBlendModePlusDarker);
     
     CGContextStrokePath(UIGraphicsGetCurrentContext());
     self.image = UIGraphicsGetImageFromCurrentImageContext();
