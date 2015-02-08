@@ -54,32 +54,7 @@
 }
 
 - (void)fakeGeneration_easy {
-    
-    NSArray *rows = @[@"F L Q E",
-                      @"F I X H",
-                      @"G A N T",
-                      @"W O R D"];
-    
-    _generatedCharsGrid = [WSCharsMatrix matrixWithArrayOfStrings:rows];
-    
-    _generatedWordList = [WSWordList list];
-    
-    WSWord *word;
-    
-    word = [WSWord wordWithText:@"FIND"
-              withStartPosition:WSMakeGridPosition(0, 0)
-                withEndPosition:WSMakeGridPosition(3, 3)];
-    [_generatedWordList addWord:word];
-    
-    word = [WSWord wordWithText:@"THE"
-              withStartPosition:WSMakeGridPosition(2, 3)
-                withEndPosition:WSMakeGridPosition(0, 3)];
-    [_generatedWordList addWord:word];
-    
-    word = [WSWord wordWithText:@"WORD"
-              withStartPosition:WSMakeGridPosition(3, 0)
-                withEndPosition:WSMakeGridPosition(3, 3)];
-    [_generatedWordList addWord:word];
+
 }
 
 - (void)fakeGeneration_medium {

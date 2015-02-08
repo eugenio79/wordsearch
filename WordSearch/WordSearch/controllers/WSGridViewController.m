@@ -6,7 +6,7 @@
 //  Copyright (c) 2015 Giuseppe Morana. All rights reserved.
 //
 
-#import "ViewController.h"
+#import "WSGridViewController.h"
 #import "WSGameGenerator.h"
 #import "WSGridCell.h"
 #import "WSPalette.h"
@@ -25,7 +25,7 @@ static NSString *kWSWordCellIdentifier = @"WSWordCellIdentifier";   // word list
 static UIEdgeInsets kWSGridSectionInsets = {0.0f, 0.0f, 0.0f, 0.0f};
 static UIEdgeInsets kWSWordListSectionInsets = {10.0f, 10.0f, 10.0f, 10.0f};
 
-@interface ViewController () <WSTouchesProtocol> {
+@interface WSGridViewController () <WSTouchesProtocol> {
     WSGameGenerator *_gameGenerator;
     WSWordList *_wordList;  // the list of the words to look for (an array of WSWord objects)
     WSCharsMatrix *_charsGrid;  // array of array of chars (each char is modeled as NSString)
@@ -49,7 +49,7 @@ static UIEdgeInsets kWSWordListSectionInsets = {10.0f, 10.0f, 10.0f, 10.0f};
 
 @end
 
-@implementation ViewController
+@implementation WSGridViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -95,7 +95,7 @@ static UIEdgeInsets kWSWordListSectionInsets = {10.0f, 10.0f, 10.0f, 10.0f};
     
     NSSet *wordsSubset = [NSSet setWithArray:fullDictionary];   // in a real world app it would be an actual subset, e.g. thematic
     
-    _gameGenerator = [WSGameGenerator generatorWithWordsSet:wordsSubset andGameLevel:WSGameLevelHard];
+    _gameGenerator = [WSGameGenerator generatorWithWordsSet:wordsSubset andGameLevel:WSGameLevelMedium];
     [_gameGenerator generate];
     
     _charsGrid = [_gameGenerator charsGrid];
