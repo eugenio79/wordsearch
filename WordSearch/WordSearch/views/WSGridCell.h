@@ -10,7 +10,7 @@
 #import "WSCommon.h"
 
 /**
- * It'll contain a character
+ * It contains a letter
  */
 @interface WSGridCell : UICollectionViewCell
 

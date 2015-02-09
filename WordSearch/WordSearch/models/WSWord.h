@@ -9,6 +9,9 @@
 #import <Foundation/Foundation.h>
 #import "WSCommon.h"
 
+/**
+ * A word in the grid
+ */
 @interface WSWord : NSObject
 
 + (instancetype)wordWithText:(NSString *)text

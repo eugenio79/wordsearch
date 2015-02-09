@@ -9,6 +9,9 @@
 #import <Foundation/Foundation.h>
 #import "WSWord.h"
 
+/**
+ * Contains the complete list of words to be found inside the grid
+ */
 @interface WSWordList : NSObject
 
 + (instancetype)list;

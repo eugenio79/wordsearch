@@ -9,6 +9,9 @@
 #import <Foundation/Foundation.h>
 #import "WSCommon.h"
 
+/**
+ * A letter in the grid
+ */
 @interface WSChar : NSObject
 
 @property (nonatomic) char character;

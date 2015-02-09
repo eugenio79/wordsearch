@@ -7,8 +7,12 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "WSCommon.h"
 
+/**
+ * The main controller of the app, where the user plays the game.
+ */
 @interface WSGridViewController : UIViewController
-
+@property (nonatomic) WSGameLevel gameLevel;
 @end
 

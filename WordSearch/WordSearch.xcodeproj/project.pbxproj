@@ -27,13 +27,14 @@
 		BA67B17C1A87D86300587CFF /* fullDictionary.plist in Resources */ = {isa = PBXBuildFile; fileRef = BA67B1741A87D86300587CFF /* fullDictionary.plist */; };
 		BA67B17D1A87D86300587CFF /* hard.png in Resources */ = {isa = PBXBuildFile; fileRef = BA67B1751A87D86300587CFF /* hard.png */; };
 		BA67B17E1A87D86300587CFF /* header_1536.png in Resources */ = {isa = PBXBuildFile; fileRef = BA67B1761A87D86300587CFF /* header_1536.png */; };
-		BA67B17F1A87D86300587CFF /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = BA67B1771A87D86300587CFF /* Info.plist */; };
 		BA67B1801A87D86300587CFF /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = BA67B1781A87D86300587CFF /* main.m */; };
 		BA67B1811A87D86300587CFF /* medium.png in Resources */ = {isa = PBXBuildFile; fileRef = BA67B1791A87D86300587CFF /* medium.png */; };
 		BA67B1821A87D86300587CFF /* Title.png in Resources */ = {isa = PBXBuildFile; fileRef = BA67B17A1A87D86300587CFF /* Title.png */; };
 		BA67B1861A87E4E800587CFF /* WSGridViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BA67B1851A87E4E800587CFF /* WSGridViewController.m */; };
 		BA67B1891A87E54B00587CFF /* WSLevelViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BA67B1881A87E54B00587CFF /* WSLevelViewController.m */; };
-		BAA0E5A01A8634690034C079 /* WSWordListView.m in Sources */ = {isa = PBXBuildFile; fileRef = BAA0E59F1A8634690034C079 /* WSWordListView.m */; };
+		BA67B1911A88338C00587CFF /* menu.png in Resources */ = {isa = PBXBuildFile; fileRef = BA67B18E1A88338C00587CFF /* menu.png */; };
+		BA67B1921A88338C00587CFF /* menu@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BA67B18F1A88338C00587CFF /* menu@2x.png */; };
+		BA67B1931A88338C00587CFF /* menu@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = BA67B1901A88338C00587CFF /* menu@3x.png */; };
 		BAA0E5A61A8697310034C079 /* WSChar.m in Sources */ = {isa = PBXBuildFile; fileRef = BAA0E5A51A8697310034C079 /* WSChar.m */; };
 		BAA0E5A91A8697B10034C079 /* WSCharsMatrix.m in Sources */ = {isa = PBXBuildFile; fileRef = BAA0E5A81A8697B10034C079 /* WSCharsMatrix.m */; };
 /* End PBXBuildFile section */
@@ -93,8 +94,9 @@
 		BA67B1851A87E4E800587CFF /* WSGridViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WSGridViewController.m; sourceTree = "<group>"; };
 		BA67B1871A87E54B00587CFF /* WSLevelViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WSLevelViewController.h; sourceTree = "<group>"; };
 		BA67B1881A87E54B00587CFF /* WSLevelViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WSLevelViewController.m; sourceTree = "<group>"; };
-		BAA0E59E1A8634690034C079 /* WSWordListView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WSWordListView.h; sourceTree = "<group>"; };
-		BAA0E59F1A8634690034C079 /* WSWordListView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WSWordListView.m; sourceTree = "<group>"; };
+		BA67B18E1A88338C00587CFF /* menu.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = menu.png; sourceTree = "<group>"; };
+		BA67B18F1A88338C00587CFF /* menu@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "menu@2x.png"; sourceTree = "<group>"; };
+		BA67B1901A88338C00587CFF /* menu@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "menu@3x.png"; sourceTree = "<group>"; };
 		BAA0E5A41A8697310034C079 /* WSChar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WSChar.h; sourceTree = "<group>"; };
 		BAA0E5A51A8697310034C079 /* WSChar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WSChar.m; sourceTree = "<group>"; };
 		BAA0E5A71A8697B10034C079 /* WSCharsMatrix.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WSCharsMatrix.h; sourceTree = "<group>"; };
@@ -140,13 +142,13 @@
 		BA4D06611A82A72D007D179C /* WordSearch */ = {
 			isa = PBXGroup;
 			children = (
-				BA67B1831A87E4E800587CFF /* controllers */,
-				BA67B1721A87D86300587CFF /* Supporting Files */,
 				BA4D06881A82B903007D179C /* Categories */,
 				BA4D068B1A82B903007D179C /* common */,
+				BA67B1831A87E4E800587CFF /* controllers */,
 				BA4D06901A82B903007D179C /* helpers */,
 				BA4D06971A82B903007D179C /* models */,
 				BA4D069C1A82B903007D179C /* protocols */,
+				BA67B1721A87D86300587CFF /* Supporting Files */,
 				BA4D069E1A82B903007D179C /* views */,
 				BA4D06661A82A72D007D179C /* AppDelegate.h */,
 				BA4D06671A82A72D007D179C /* AppDelegate.m */,
@@ -239,8 +241,6 @@
 				BA4D06A41A82B903007D179C /* WSMarksOverlay.m */,
 				BA4D06A51A82B903007D179C /* WSWordCell.h */,
 				BA4D06A61A82B903007D179C /* WSWordCell.m */,
-				BAA0E59E1A8634690034C079 /* WSWordListView.h */,
-				BAA0E59F1A8634690034C079 /* WSWordListView.m */,
 			);
 			path = views;
 			sourceTree = "<group>";
@@ -248,6 +248,9 @@
 		BA67B1721A87D86300587CFF /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				BA67B18E1A88338C00587CFF /* menu.png */,
+				BA67B18F1A88338C00587CFF /* menu@2x.png */,
+				BA67B1901A88338C00587CFF /* menu@3x.png */,
 				BA67B1731A87D86300587CFF /* easy.png */,
 				BA67B1741A87D86300587CFF /* fullDictionary.plist */,
 				BA67B1751A87D86300587CFF /* hard.png */,
@@ -274,9 +277,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		BA4D065E1A82A72D007D179C /* WordSearch */ = {
+		BA4D065E1A82A72D007D179C /* FindTheWord */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = BA4D06821A82A72D007D179C /* Build configuration list for PBXNativeTarget "WordSearch" */;
+			buildConfigurationList = BA4D06821A82A72D007D179C /* Build configuration list for PBXNativeTarget "FindTheWord" */;
 			buildPhases = (
 				BA4D065B1A82A72D007D179C /* Sources */,
 				BA4D065C1A82A72D007D179C /* Frameworks */,
@@ -286,7 +289,7 @@
 			);
 			dependencies = (
 			);
-			name = WordSearch;
+			name = FindTheWord;
 			productName = WordSearch;
 			productReference = BA4D065F1A82A72D007D179C /* WordSearch.app */;
 			productType = "com.apple.product-type.application";
@@ -340,7 +343,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				BA4D065E1A82A72D007D179C /* WordSearch */,
+				BA4D065E1A82A72D007D179C /* FindTheWord */,
 				BA4D06771A82A72D007D179C /* WordSearchTests */,
 			);
 		};
@@ -351,15 +354,17 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BA67B1921A88338C00587CFF /* menu@2x.png in Resources */,
 				BA67B1811A87D86300587CFF /* medium.png in Resources */,
-				BA67B17F1A87D86300587CFF /* Info.plist in Resources */,
 				BA4D066E1A82A72D007D179C /* Main.storyboard in Resources */,
 				BA67B17E1A87D86300587CFF /* header_1536.png in Resources */,
 				BA67B17B1A87D86300587CFF /* easy.png in Resources */,
 				BA67B17D1A87D86300587CFF /* hard.png in Resources */,
 				BA67B1821A87D86300587CFF /* Title.png in Resources */,
+				BA67B1911A88338C00587CFF /* menu.png in Resources */,
 				BA4D06701A82A72D007D179C /* Images.xcassets in Resources */,
 				BA67B1651A87B9EC00587CFF /* LaunchScreen.xib in Resources */,
+				BA67B1931A88338C00587CFF /* menu@3x.png in Resources */,
 				BA67B17C1A87D86300587CFF /* fullDictionary.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -389,7 +394,6 @@
 				BA4D06681A82A72D007D179C /* AppDelegate.m in Sources */,
 				BA4D06AB1A82B903007D179C /* WSPalette.m in Sources */,
 				BA4D06AF1A82B903007D179C /* WSWord.m in Sources */,
-				BAA0E5A01A8634690034C079 /* WSWordListView.m in Sources */,
 				BA4D06AA1A82B903007D179C /* WSCommon.m in Sources */,
 				BA67B1801A87D86300587CFF /* main.m in Sources */,
 				BA4D06B11A82B903007D179C /* WSGridCell.m in Sources */,
@@ -412,7 +416,7 @@
 /* Begin PBXTargetDependency section */
 		BA4D067A1A82A72D007D179C /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = BA4D065E1A82A72D007D179C /* WordSearch */;
+			target = BA4D065E1A82A72D007D179C /* FindTheWord */;
 			targetProxy = BA4D06791A82A72D007D179C /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
@@ -511,10 +515,13 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
 				INFOPLIST_FILE = "$(SRCROOT)/WordSearch/Supporting Files/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
@@ -523,10 +530,13 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
 				INFOPLIST_FILE = "$(SRCROOT)/WordSearch/Supporting Files/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
@@ -577,7 +587,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		BA4D06821A82A72D007D179C /* Build configuration list for PBXNativeTarget "WordSearch" */ = {
+		BA4D06821A82A72D007D179C /* Build configuration list for PBXNativeTarget "FindTheWord" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				BA4D06831A82A72D007D179C /* Debug */,

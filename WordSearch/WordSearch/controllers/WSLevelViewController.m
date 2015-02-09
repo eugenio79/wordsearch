@@ -7,8 +7,16 @@
 //
 
 #import "WSLevelViewController.h"
+#import "WSCommon.h"
+#import "WSGridViewController.h"
 
-@interface WSLevelViewController ()
+@interface WSLevelViewController () {
+    WSGameLevel _gameLevel;
+}
+
+@property (weak, nonatomic) IBOutlet UIView *easyView;
+@property (weak, nonatomic) IBOutlet UIView *mediumView;
+@property (weak, nonatomic) IBOutlet UIView *hardView;
 
 @end
 
@@ -16,24 +24,47 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view.
+    
+    UITapGestureRecognizer *tapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(easyView_tapped)];
+    tapGestureRecognizer.numberOfTapsRequired = 1;
+    [self.easyView addGestureRecognizer:tapGestureRecognizer];
+    
+    tapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(mediumView_tapped)];
+    tapGestureRecognizer.numberOfTapsRequired = 1;
+    [self.mediumView addGestureRecognizer:tapGestureRecognizer];
+    
+    tapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(hardView_tapped)];
+    tapGestureRecognizer.numberOfTapsRequired = 1;
+    [self.hardView addGestureRecognizer:tapGestureRecognizer];
 }
 
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+- (void)easyView_tapped {
+    
+    _gameLevel = WSGameLevelEasy;
+    [self performSegueWithIdentifier:@"showGridSegue" sender:self];
 }
 
+- (void)mediumView_tapped {
+    
+    _gameLevel = WSGameLevelMedium;
+    [self performSegueWithIdentifier:@"showGridSegue" sender:self];
+}
 
+- (void)hardView_tapped {
 
-/*
+    _gameLevel = WSGameLevelHard;
+    [self performSegueWithIdentifier:@"showGridSegue" sender:self];
+}
+
 #pragma mark - Navigation
 
-// In a storyboard-based application, you will often want to do a little preparation before navigation
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
+    if ([segue.identifier isEqualToString:@"showGridSegue"]) {
+        if ([[segue destinationViewController] isKindOfClass:[WSGridViewController class]]) {
+            WSGridViewController *controller = (WSGridViewController *)[segue destinationViewController];
+            controller.gameLevel = _gameLevel;
+        }
+    }
 }
-*/
 
 @end

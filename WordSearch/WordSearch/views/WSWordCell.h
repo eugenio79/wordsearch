@@ -9,6 +9,9 @@
 #import <UIKit/UIKit.h>
 #import "WSWord.h"
 
+/**
+ * It contains a word (bottom part of the screen)
+ */
 @interface WSWordCell : UICollectionViewCell
 
 @property (nonatomic, strong) WSWord *word;

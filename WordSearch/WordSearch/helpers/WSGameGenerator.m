@@ -54,7 +54,65 @@
 }
 
 - (void)fakeGeneration_easy {
-
+    
+    NSArray *rows = @[@"A C E S C A M F",
+                      @"F O D O Z O O I",
+                      @"O R Y K E F N N",
+                      @"O R E L C F A F",
+                      @"Z E O E Z A C A",
+                      @"L G U T X B H M",
+                      @"A G T D T C E E",
+                      @"B A R E M E V D"];
+    
+    _generatedCharsGrid = [WSCharsMatrix matrixWithArrayOfStrings:rows];
+    _generatedWordList = [WSWordList list];
+    
+    WSWord *word;
+    
+    word = [WSWord wordWithText:@"BAFFO"
+              withStartPosition:WSMakeGridPosition(5, 5)
+                withEndPosition:WSMakeGridPosition(1, 5)];
+    [_generatedWordList addWord:word];
+    
+    word = [WSWord wordWithText:@"BALZO"
+              withStartPosition:WSMakeGridPosition(7, 0)
+                withEndPosition:WSMakeGridPosition(3, 0)];
+    [_generatedWordList addWord:word];
+    
+    word = [WSWord wordWithText:@"CLERO"
+              withStartPosition:WSMakeGridPosition(3, 4)
+                withEndPosition:WSMakeGridPosition(3, 0)];
+    [_generatedWordList addWord:word];
+    
+    word = [WSWord wordWithText:@"CORREGGA"
+              withStartPosition:WSMakeGridPosition(0, 1)
+                withEndPosition:WSMakeGridPosition(7, 1)];
+    [_generatedWordList addWord:word];
+    
+    word = [WSWord wordWithText:@"ESCA"
+              withStartPosition:WSMakeGridPosition(0, 2)
+                withEndPosition:WSMakeGridPosition(0, 5)];
+    [_generatedWordList addWord:word];
+    
+    word = [WSWord wordWithText:@"ETTO"
+              withStartPosition:WSMakeGridPosition(7, 5)
+                withEndPosition:WSMakeGridPosition(4, 2)];
+    [_generatedWordList addWord:word];
+    
+    word = [WSWord wordWithText:@"INFAME"
+              withStartPosition:WSMakeGridPosition(1, 7)
+                withEndPosition:WSMakeGridPosition(6, 7)];
+    [_generatedWordList addWord:word];
+    
+    word = [WSWord wordWithText:@"MERA"
+              withStartPosition:WSMakeGridPosition(7, 4)
+                withEndPosition:WSMakeGridPosition(7, 1)];
+    [_generatedWordList addWord:word];
+    
+    word = [WSWord wordWithText:@"MONACHE"
+              withStartPosition:WSMakeGridPosition(0, 6)
+                withEndPosition:WSMakeGridPosition(6, 6)];
+    [_generatedWordList addWord:word];
 }
 
 - (void)fakeGeneration_medium {

@@ -9,6 +9,9 @@
 #import <Foundation/Foundation.h>
 #import "WSMark.h"
 
+/**
+ * Creates the marks
+ */
 @interface WSMarksFactory : NSObject
 
 + (instancetype)factoryWithCellSize:(CGSize)cellSize;

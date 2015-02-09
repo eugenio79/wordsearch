@@ -8,6 +8,9 @@
 
 #import <UIKit/UIKit.h>
 
+/**
+ * Root view controller. Here you can select the level of the game.
+ */
 @interface WSLevelViewController : UIViewController
 
 @end

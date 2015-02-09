@@ -10,7 +10,9 @@
 #import <UIKit/UIKit.h>
 #import "WSCommon.h"
 
-
+/**
+ * It contains all info to draw a mark onto an overlay 
+ */
 @interface WSMark : NSObject
 
 @property (nonatomic, readonly) WSBrush brush;

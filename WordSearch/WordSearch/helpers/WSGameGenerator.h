@@ -11,11 +11,6 @@
 #import "WSWordList.h"
 #import "WSCharsMatrix.h"
 
-typedef enum {
-    WSGameLevelEasy,    // grid = 8x8, words = 9
-    WSGameLevelMedium,  // grid = 8x8, words = 12
-    WSGameLevelHard     // grid = 10x10, words = 12
-} WSGameLevel;
 
 /**
  * It's the core game engine. It generates the word list and the chars grid.

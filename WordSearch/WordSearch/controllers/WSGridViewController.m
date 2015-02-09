@@ -27,16 +27,14 @@ static UIEdgeInsets kWSWordListSectionInsets = {10.0f, 10.0f, 10.0f, 10.0f};
 
 @interface WSGridViewController () <WSTouchesProtocol> {
     WSGameGenerator *_gameGenerator;
-    WSWordList *_wordList;  // the list of the words to look for (an array of WSWord objects)
-    WSCharsMatrix *_charsGrid;  // array of array of chars (each char is modeled as NSString)
-    WSMarksFactory *_permanentMarksFactory; // creates the 'marks' above the grid
+    WSWordList *_wordList;  // the list of the words to look for (it contains an array of WSWord objects)
+    WSCharsMatrix *_charsGrid;  // the grid model (a grid of WSChar objects)
+    WSMarksFactory *_permanentMarksFactory; // creates the 'word found marks' above the grid
     WSMarksFactory *_tempMarksFactory;      // creates temporary marks
     WSMark *_currentMark;   // current temp mark
     NSArray *_wordStrings;  // the list of words to look for (an array of NSString, derived from _wordList)
     NSArray *_colorsPalette;
     NSUInteger _currentColorIndex;
-//    CGSize _currentGridCellSize;
-//    CGFloat _currentGridCellFontSize;
 }
 
 @property (weak, nonatomic) IBOutlet UICollectionView *gridView;
@@ -58,17 +56,20 @@ static UIEdgeInsets kWSWordListSectionInsets = {10.0f, 10.0f, 10.0f, 10.0f};
 
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
-    [self setupUI];   // only now I can setup some UI settings, because I need to know how big is a cell
+    [self setupUI];   // only now I can setup some UI settings, because I need to know how big a cell is
 }
 
 - (CGFloat)gridCellFontSize
 {
-    NSString *charStr = @"A";   // random char
-    CGFloat fontSize = 17.0f;
-    NSDictionary *attributes = @{NSFontAttributeName: [UIFont fontWithName:@"TrebuchetMS" size:fontSize]};
-    CGSize size = [charStr sizeWithAttributes:attributes];
-    CGFloat pointsPerPixel = fontSize / size.height;
-    return self.gridCellSize.height * pointsPerPixel * 0.65;
+    if (_gridCellFontSize == 0) {
+        NSString *charStr = @"A";   // random char, I choosed an 'A' as a template letter
+        CGFloat fontSize = 17.0f;
+        NSDictionary *attributes = @{NSFontAttributeName: [UIFont fontWithName:@"TrebuchetMS" size:fontSize]};
+        CGSize size = [charStr sizeWithAttributes:attributes];
+        CGFloat pointsPerPixel = fontSize / size.height;
+        _gridCellFontSize = self.gridCellSize.height * pointsPerPixel * 0.65;
+    }
+    return _gridCellFontSize;
 }
 
 - (void)setupUI
@@ -95,7 +96,7 @@ static UIEdgeInsets kWSWordListSectionInsets = {10.0f, 10.0f, 10.0f, 10.0f};
     
     NSSet *wordsSubset = [NSSet setWithArray:fullDictionary];   // in a real world app it would be an actual subset, e.g. thematic
     
-    _gameGenerator = [WSGameGenerator generatorWithWordsSet:wordsSubset andGameLevel:WSGameLevelMedium];
+    _gameGenerator = [WSGameGenerator generatorWithWordsSet:wordsSubset andGameLevel:self.gameLevel];
     [_gameGenerator generate];
     
     _charsGrid = [_gameGenerator charsGrid];
@@ -103,6 +104,9 @@ static UIEdgeInsets kWSWordListSectionInsets = {10.0f, 10.0f, 10.0f, 10.0f};
     _wordStrings = [_wordList strings]; // cache them
 }
 
+- (IBAction)menuItem_tapped:(id)sender {
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
 
 #pragma mark - UICollectionViewDataSource implementation
 
@@ -170,26 +174,6 @@ static UIEdgeInsets kWSWordListSectionInsets = {10.0f, 10.0f, 10.0f, 10.0f};
     return CGSizeZero;
 }
 
-/*
-- (CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout minimumLineSpacingForSectionAtIndex:(NSInteger)section
-{
-    if (collectionView == self.wordListView)
-        return 10.0f;
-    else
-        return 0.0f;
-}
- */
-
-/*
-- (CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout minimumInteritemSpacingForSectionAtIndex:(NSInteger)section
-{
-    if (collectionView == self.wordListView)
-        return 0.0f;
-    else
-        return 0.0f;
-}
- */
-
 #pragma mark - touches
 
 - (void)touchBeganAtPoint:(CGPoint)point {
@@ -229,7 +213,6 @@ static UIEdgeInsets kWSWordListSectionInsets = {10.0f, 10.0f, 10.0f, 10.0f};
 }
 
 - (void)touchCancelled {
-    NSLog(@"touchCancelled");
     
     [_tempMarksOverlay clear];
     _currentMark = nil;
@@ -250,7 +233,7 @@ static UIEdgeInsets kWSWordListSectionInsets = {10.0f, 10.0f, 10.0f, 10.0f};
     return gridPosition;
 }
 
-// lazy-load
+// computed one time
 - (CGSize)gridCellSize {
     if (areEqualsSizes(_gridCellSize, CGSizeZero)) {
         _gridCellSize.width = self.gridView.frame.size.width / [_charsGrid columnsCount];
@@ -261,13 +244,11 @@ static UIEdgeInsets kWSWordListSectionInsets = {10.0f, 10.0f, 10.0f, 10.0f};
 
 - (CGSize)wordCellSize {
 
-//    NSLog(@"self.view.frame: %@", NSStringFromCGRect(self.view.frame));
-//    NSLog(@"self.wordListView.frame: %@", NSStringFromCGRect(self.wordListView.frame));
-    
     CGRect drawableFrame = UIEdgeInsetsInsetRect(self.wordListView.frame, kWSWordListSectionInsets);
 
     CGSize size;
     
+    // for demo purpose I take into account only two configurations: 9 and 12 words
     switch (_wordStrings.count) {
         case 12: {
             // e.g. iPhone portrait
@@ -300,6 +281,7 @@ static UIEdgeInsets kWSWordListSectionInsets = {10.0f, 10.0f, 10.0f, 10.0f};
     [_permanentMarksOverlay addMark:mark];
 }
 
+// changes the color of the letters once "marked"
 - (void)markCharsForWord:(WSWord *)word {
     
     NSMutableArray *indexPathsToReload = [NSMutableArray new];
@@ -326,6 +308,7 @@ static UIEdgeInsets kWSWordListSectionInsets = {10.0f, 10.0f, 10.0f, 10.0f};
     return [NSIndexPath indexPathForItem:index inSection:0];
 }
 
+// adds a mark onto a word in the lower list 
 - (BOOL)crossOutString:(NSString *)string {
     
     NSUInteger index = [_wordStrings indexOfObject:string];
